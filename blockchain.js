@@ -20,3 +20,5 @@ class Blockchain {
 		return newBlock;
 	}
 }
+
+module.exports = Blockchain;
