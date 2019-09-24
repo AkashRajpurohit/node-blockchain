@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/AkashRajpurohit/node-blockchain/issues"
   },
-  "homepage": "https://github.com/AkashRajpurohit/node-blockchain#readme"
+  "homepage": "https://github.com/AkashRajpurohit/node-blockchain#readme",
+  "dependencies": {
+    "express": "4.17.1"
+  }
 }
