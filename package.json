@@ -4,8 +4,8 @@
   "description": "",
   "main": "blockchain.js",
   "scripts": {
-    "start": "node blockchain.js",
-    "test": "node test.js"
+    "start": "node app.js",
+    "test": "node tests/test.js"
   },
   "repository": {
     "type": "git",

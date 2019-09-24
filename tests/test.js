@@ -1,4 +1,4 @@
-const Blockchain = require('./blockchain');
+const Blockchain = require('../lib/blockchain');
 
 const bitcoin = new Blockchain();
 
