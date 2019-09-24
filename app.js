@@ -47,5 +47,5 @@ app.get('/mine', (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.argv[2];
 app.listen(PORT, console.log(`Server started at port: ${PORT}`))
