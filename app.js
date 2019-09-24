@@ -58,7 +58,7 @@ app.post('/register-and-broadcast-node', async (req, res) => {
 
 	bitcoin.networkNodes.forEach(networkNodeUrl => {
 		const requestOptions = {
-			uri: newNodeUrl + '/register-node',
+			uri: networkNodeUrl + '/register-node',
 			method: 'POST',
 			body: { newNodeUrl },
 			json: true
@@ -67,9 +67,8 @@ app.post('/register-and-broadcast-node', async (req, res) => {
 		registerNodesPromises.push(rp(requestOptions))
 	});
 
-	let data;
 	try {
-		data = await Promise.all(registerNodesPromises);
+		await Promise.all(registerNodesPromises);
 	} catch(e) {
 		console.error("Error registering nodes: ", e);
 	}
@@ -104,7 +103,7 @@ app.post('/register-node', (req, res) => {
 
 // register multiple nodes at once
 app.post('/register-node-bulk', (req, res) => {
-
+	
 });
 
 
