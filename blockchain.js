@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 class Blockchain {
 	constructor() {
 		this.chain = [];
@@ -34,6 +36,15 @@ class Blockchain {
 		this.pendingTransactions.push(newTransaction);
 
 		return this.getLastBlock()['index'] + 1;
+	}
+
+	hashBlock(previousBlockHash, currentBlockData, nonce) {
+		const dataAsString = previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData);
+
+		const hash = crypto.createHash('sha256');
+		hash.update(dataAsString);
+		
+		return hash.digest('hex')
 	}
 }
 

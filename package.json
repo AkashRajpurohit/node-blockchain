@@ -1,0 +1,20 @@
+{
+  "name": "blockchain-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "blockchain.js",
+  "scripts": {
+    "start": "node blockchain.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkashRajpurohit/node-blockchain.git"
+  },
+  "keywords": [],
+  "author": "Akash Rajpurohit <akash009.dev@gmail.com> (https://akashrajpurohit.cf/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AkashRajpurohit/node-blockchain/issues"
+  },
+  "homepage": "https://github.com/AkashRajpurohit/node-blockchain#readme"
+}
