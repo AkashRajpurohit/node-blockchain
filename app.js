@@ -50,7 +50,7 @@ app.get('/mine', (req, res) => {
 // register a new node and broadcast it to network
 app.post('/register-and-broadcast-node', async (req, res) => {
 	const { newNodeUrl } = req.body;
-	if(bitcoin.networkNodes.indexOf() === -1) {
+	if(bitcoin.networkNodes.indexOf(newNodeUrl) === -1) {
 		bitcoin.networkNodes.push(newNodeUrl);
 	}
 
@@ -83,7 +83,7 @@ app.post('/register-and-broadcast-node', async (req, res) => {
 
 	try {
 		await rp(bulkRegisterOptions);
-		res.json({ note: 'New node registered with network successfully '});
+		res.json({ note: 'New node registered with network successfully.' });
 	} catch(e) {
 		console.error("Error bulk registering nodes: ", e)
 	}
@@ -92,7 +92,14 @@ app.post('/register-and-broadcast-node', async (req, res) => {
 
 // register a new node
 app.post('/register-node', (req, res) => {
+	const { newNodeUrl } = req.body;
 
+	if(bitcoin.networkNodes.indexOf(newNodeUrl) === -1 
+			&& bitcoin.currentNodeUrl !== newNodeUrl) {
+		bitcoin.networkNodes.push(newNodeUrl);
+	}
+
+	res.json({ note: 'New node registered successfully.' })
 });
 
 // register multiple nodes at once
