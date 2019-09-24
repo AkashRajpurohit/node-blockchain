@@ -1,5 +1,6 @@
 const express = require('express');
 const uuid = require('uuid/v1');
+const rp = require('request-promise');
 
 const Blockchain = require('./lib/blockchain');
 
@@ -43,6 +44,59 @@ app.get('/mine', (req, res) => {
 		note: 'New block mined successfully',
 		block: newBlock
 	});
+
+});
+
+// register a new node and broadcast it to network
+app.post('/register-and-broadcast-node', async (req, res) => {
+	const { newNodeUrl } = req.body;
+	if(bitcoin.networkNodes.indexOf() === -1) {
+		bitcoin.networkNodes.push(newNodeUrl);
+	}
+
+	const registerNodesPromises = [];
+
+	bitcoin.networkNodes.forEach(networkNodeUrl => {
+		const requestOptions = {
+			uri: newNodeUrl + '/register-node',
+			method: 'POST',
+			body: { newNodeUrl },
+			json: true
+		};
+
+		registerNodesPromises.push(rp(requestOptions))
+	});
+
+	let data;
+	try {
+		data = await Promise.all(registerNodesPromises);
+	} catch(e) {
+		console.error("Error registering nodes: ", e);
+	}
+
+	const bulkRegisterOptions = {
+		uri: newNodeUrl + '/register-node-bulk',
+		method: 'POST',
+		body: { allNetworkNodes: [ ...bitcoin.networkNodes, bitcoin.currentNodeUrl ] },
+		json: true
+	};
+
+	try {
+		await rp(bulkRegisterOptions);
+		res.json({ note: 'New node registered with network successfully '});
+	} catch(e) {
+		console.error("Error bulk registering nodes: ", e)
+	}
+
+});
+
+// register a new node
+app.post('/register-node', (req, res) => {
+
+});
+
+// register multiple nodes at once
+app.post('/register-node-bulk', (req, res) => {
 
 });
 

@@ -6,7 +6,6 @@
   "scripts": {
     "start": "concurrently \"yarn run node_1\" \"yarn run node_2\" \"yarn run node_3\" \"yarn run node_4\" \"yarn run node_5\" \"yarn run node_6\"",
     "test": "node tests/test.js",
-    "dev": "nodemon app.js 3001",
     "node_1": "nodemon app.js 3001 http://localhost:3001",
     "node_2": "nodemon app.js 3002 http://localhost:3002",
     "node_3": "nodemon app.js 3003 http://localhost:3003",
@@ -28,6 +27,8 @@
   "dependencies": {
     "concurrently": "4.1.2",
     "express": "4.17.1",
+    "request": "2.88.0",
+    "request-promise": "4.2.4",
     "uuid": "3.3.3"
   },
   "devDependencies": {
