@@ -93,7 +93,7 @@ app.post('/register-and-broadcast-node', async (req, res) => {
 app.post('/register-node', (req, res) => {
 	const { newNodeUrl } = req.body;
 
-	if(bitcoin.networkNodes.indexOf(newNodeUrl) === -1 
+	if(!bitcoin.networkNodes.includes(newNodeUrl)
 			&& bitcoin.currentNodeUrl !== newNodeUrl) {
 		bitcoin.networkNodes.push(newNodeUrl);
 	}
@@ -103,7 +103,16 @@ app.post('/register-node', (req, res) => {
 
 // register multiple nodes at once
 app.post('/register-node-bulk', (req, res) => {
-	
+	const { allNetworkNodes } = req.body;
+
+	allNetworkNodes.forEach(networkNodeUrl => {
+		if(!bitcoin.networkNodes.includes(networkNodeUrl)
+				&& bitcoin.currentNodeUrl !== networkNodeUrl) {
+			bitcoin.networkNodes.push(networkNodeUrl);
+		}
+	});
+
+	res.json({ note: 'Bulk registeration successful.' });
 });
 
 
