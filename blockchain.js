@@ -43,8 +43,20 @@ class Blockchain {
 
 		const hash = crypto.createHash('sha256');
 		hash.update(dataAsString);
-		
-		return hash.digest('hex')
+
+		return hash.digest('hex');
+	}
+
+	proofOfWork(previousBlockHash, currentBlockData) {
+		let nonce = 0;
+		let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+
+		while(hash.substring(0, 4) !== '0000') {
+			nonce += 1;
+			hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+		}
+
+		return nonce;
 	}
 }
 
