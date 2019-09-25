@@ -54,7 +54,7 @@ app.post('/transaction/broadcast', async (req, res) => {
 
 });
 
-app.get('/mine', (req, res) => {
+app.get('/mine', async (req, res) => {
 	const lastBlock = bitcoin.getLastBlock();
 	const previousBlockHash = lastBlock['hash'];
 	const currentBlockData = {
@@ -65,13 +65,49 @@ app.get('/mine', (req, res) => {
 	const nonce = bitcoin.proofOfWork(previousBlockHash, currentBlockData);
 	const blockHash = bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce);
 
-	// Reward this node
-	bitcoin.createNewTransaction(12.5, "00", NODE_ADDRESS);
-
 	const newBlock = bitcoin.createNewBlock(nonce, previousBlockHash, blockHash);
 
+	const addNewBlockPromises = [];
+
+	bitcoin.networkNodes.forEach(networkNodeUrl => {
+		const requestOptions = {
+			uri: networkNodeUrl + '/recieve-new-block',
+			method: 'POST',
+			body: { newBlock },
+			json: true
+		}
+
+		addNewBlockPromises.push(rp(requestOptions));
+	});
+
+	try {
+		await Promise.all(addNewBlockPromises);
+	} catch(e) {
+		console.log(e);
+		return;
+	}
+
+	// Reward this node
+	const requestOptions = {
+		uri: currentNodeUrl + '/transaction/broadcast',
+		method: 'POST',
+		body: {
+			amount: 12.5,
+			sender: '00',
+			recipient: NODE_ADDRESS
+		},
+		json: true
+	}
+
+	try {
+		await rp(requestOptions);
+	} catch(e) {
+		console.log("Reward did not processed: " ,e);
+		return;
+	}
+
 	res.json({
-		note: 'New block mined successfully',
+		note: 'New block mined & broadcasted successfully.',
 		block: newBlock
 	});
 
