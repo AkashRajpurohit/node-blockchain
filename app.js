@@ -247,6 +247,20 @@ app.get('/consensus', async (req, res) => {
 
 });
 
+// --------------------------------------------------------------
+// @Block Explorer API's
+app.get('/block/:blockHash', (req, res) => {
+
+});
+
+app.get('/transaction/:transactionId', (req, res) => {
+
+});
+
+app.get('/address/:address', (req, res) => {
+
+});
+
 
 const PORT = process.argv[2];
 app.listen(PORT, console.log(`Server started at port: ${PORT}`))
