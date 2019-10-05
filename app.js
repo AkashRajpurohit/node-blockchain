@@ -272,6 +272,9 @@ app.get('/address/:address', (req, res) => {
 	res.json({ ...addressData });
 });
 
+app.get('/block-explorer', (req, res) => {
+	res.sendFile(__dirname + '/block-explorer/index.html');
+})
 
 const PORT = process.argv[2];
 app.listen(PORT, console.log(`Server started at port: ${PORT}`))
