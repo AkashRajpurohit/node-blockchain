@@ -259,7 +259,10 @@ app.get('/block/:blockHash', (req, res) => {
 });
 
 app.get('/transaction/:transactionId', (req, res) => {
+	const { transactionId } = req.params;
+	const transactionData = bitcoin.getTransaction(transactionId);
 
+	res.json({ ...transactionData });
 });
 
 app.get('/address/:address', (req, res) => {
