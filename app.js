@@ -250,7 +250,12 @@ app.get('/consensus', async (req, res) => {
 // --------------------------------------------------------------
 // @Block Explorer API's
 app.get('/block/:blockHash', (req, res) => {
+	const { blockHash } = req.params;
+	const correctBlock = bitcoin.getBlock(blockHash);
 
+	res.json({
+		block: correctBlock
+	});
 });
 
 app.get('/transaction/:transactionId', (req, res) => {
