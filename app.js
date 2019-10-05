@@ -266,7 +266,10 @@ app.get('/transaction/:transactionId', (req, res) => {
 });
 
 app.get('/address/:address', (req, res) => {
+	const { address } = req.params;
+	const addressData = bitcoin.getAddressData(address);
 
+	res.json({ ...addressData });
 });
 
 
