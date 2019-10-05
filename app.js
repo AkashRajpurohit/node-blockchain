@@ -84,12 +84,11 @@ app.get('/mine', async (req, res) => {
 		await Promise.all(addNewBlockPromises);
 	} catch(e) {
 		console.log(e);
-		return;
 	}
 
 	// Reward this node
 	const requestOptions = {
-		uri: currentNodeUrl + '/transaction/broadcast',
+		uri: bitcoin.currentNodeUrl + '/transaction/broadcast',
 		method: 'POST',
 		body: {
 			amount: 12.5,
