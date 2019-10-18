@@ -12,10 +12,10 @@
 
 ### Prerequisites
 1. NodeJS:
-Please install NodeJS >= 10.15.0. If you already have it, you're good to go.
+Please install [NodeJS](https://nodejs.org/en/) >= 10.15.0. If you already have it, you're good to go.
 
 2. Yarn:
-Visit Yarn download page. Select your Operating system and follow the instructions.
+Visit Yarn [download page](https://yarnpkg.com/en/docs/install). Select your Operating system and follow the instructions.
 
 Once you have the [Prerequisites](#prerequisites) covered:
 
